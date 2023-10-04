@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="6">
+      <Unit0>
+        <Filename Value="DeviceSelect.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="12"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="Main.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Main"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="45" Y="235"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="CANdoImport.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="CANdoImport"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="138"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="21"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../CANdoAUTO/CANdoAUTOConfiguration.lpr"/>
+        <UnitName Value="CANdoAUTOConfiguration"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="52" Y="14"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="../AutoConnect/Main.pas"/>
+        <UnitName Value="Main"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="106"/>
+        <CursorPos X="1" Y="116"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../CANdoAUTO/Main.pas"/>
+        <UnitName Value="Main"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
+    </Units>
+    <General>
+      <ActiveWindowIndexAtStart Value="0"/>
+    </General>
+    <JumpHistory Count="5" HistoryIndex="4">
+      <Position1>
+        <Filename Value="Main.pas"/>
+        <Caret Line="172" Column="1" TopLine="1"/>
+      </Position1>
+      <Position2>
+        <Filename Value="Main.pas"/>
+        <Caret Line="25" Column="3" TopLine="1"/>
+      </Position2>
+      <Position3>
+        <Filename Value="Main.pas"/>
+        <Caret Line="104" Column="15" TopLine="95"/>
+      </Position3>
+      <Position4>
+        <Filename Value="Main.pas"/>
+        <Caret Line="133" Column="25" TopLine="105"/>
+      </Position4>
+      <Position5>
+        <Filename Value="Main.pas"/>
+        <Caret Line="166" Column="25" TopLine="138"/>
+      </Position5>
+    </JumpHistory>
+  </ProjectSession>
+  <EditorMacros Count="0"/>
+</CONFIG>
