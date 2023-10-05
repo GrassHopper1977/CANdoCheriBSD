@@ -31,6 +31,9 @@
 #include <dlfcn.h>
 #include "CANdoImport.h"
 #include "CANdoC.h"
+#ifdef __FreeBSD__
+#include <fcntl.h>
+#endif
 //------------------------------------------------------------------------------
 // GLOBALS
 //------------------------------------------------------------------------------
@@ -610,17 +613,35 @@ int GetKey(void)
   // Set the terminal to raw mode
   tcgetattr(fileno(stdin), &OriginalTerminalAttr);
   memcpy(&NewTerminalAttr, &OriginalTerminalAttr, sizeof(struct termios));
+  NewTerminalAttr.c_cc[VMIN] = 0;
   NewTerminalAttr.c_lflag &= ~(ECHO | ICANON);
   NewTerminalAttr.c_cc[VTIME] = 0;
-  NewTerminalAttr.c_cc[VMIN] = 0;
   tcsetattr(fileno(stdin), TCSANOW, &NewTerminalAttr);
+  #ifdef __FreeBSD__
+  int open_flag = fcntl(0, F_GETFL);
+  if(-1 == fcntl(0, F_SETFL, open_flag | O_NONBLOCK)) {
+    printf("ERR: Unable to change to NONBLOCK!");
+  }
+  char buf[1];
+  int numRead = read(0, buf, 1);
+  if(numRead > 0) {
+    Character = buf[0];
+  } else {
+    Character = EOF;
+  }
+  // cfmakeraw(&NewTerminalAttr);
+  if(-1 == fcntl(0, F_SETFL, open_flag)) {
+    printf("ERR: Unable to reset NONBLOCK!");
+  }
+  #else
 
   // Read a character from the STDIN stream without blocking
   Character = fgetc(stdin);
+  #endif
+
 
   // Restore the original terminal attributes
   tcsetattr(fileno(stdin), TCSANOW, &OriginalTerminalAttr);
-
   return Character;
 }
 //------------------------------------------------------------------------------
@@ -677,6 +698,15 @@ int main(void)
       // CANdo conn. open, so display menu
       DisplayMenu(TRUE);  // Display the options menu
     CANdoStart();
+// #ifdef __unix
+//     printf("\n__unix");
+// #endif
+// #ifdef __linux__
+//     printf("\n__linux__");
+// #endif
+// #ifdef __FreeBSD__
+//     printf("\n__FreeBSD__");
+// #endif
   }
   else
   {

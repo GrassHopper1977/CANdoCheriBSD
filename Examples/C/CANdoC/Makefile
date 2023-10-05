@@ -9,6 +9,6 @@ CFLAGS=-Wall
 LFLAGS=-ldl
 
 CANdoC : CANdoC.c CANdoC.h CANdoImport.h
-	gcc $(CFLAGS) CANdoC.c $(LFLAGS) -oCANdoC
+	cc $(CFLAGS) CANdoC.c $(LFLAGS) -oCANdoC
 
 #----------------------------------------------------------------
