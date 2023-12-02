@@ -7,8 +7,11 @@
 #----------------------------------------------------------------
 CFLAGS=-Wall
 LFLAGS=-ldl
+PURECAP = -mabi=purecap
+HYBRID = -mabi=aapcs
 
 CANdoC : CANdoC.c CANdoC.h CANdoImport.h
-	cc $(CFLAGS) CANdoC.c $(LFLAGS) -oCANdoC
+	cc $(PURECAP) $(CFLAGS) CANdoC.c $(LFLAGS) -oCANdoC
+	cc $(HYBRID) $(CFLAGS) CANdoC.c $(LFLAGS) -oCANdoC_hy
 
 #----------------------------------------------------------------

@@ -91,6 +91,7 @@ unsigned char BusLoadEnableFlag;  // CAN bus load enable
 unsigned char CANdoInitialise(void)
 {
   unsigned char Status;
+  printf("CANdoInitialise(void)\n");
 
   if (DLLHandle == NULL)
 #ifdef _WIN32
@@ -312,6 +313,9 @@ void CANdoConnect(void)
 
   DeviceType = CANDO_TYPE_UNKNOWN;  // Device type unknown
   NoOfDevices = MAX_NO_OF_DEVICES;  // Max. no. of devices to enumerate
+  printf("CANdoGetDevices: %p\n", CANdoGetDevices);
+  printf("CANdoVersion: %p\n", CANdoVersion);
+  CANdoVersion();
   Status = CANdoGetDevices(CANdoDevices, &NoOfDevices);  // Get a list of the CANdo devices connected
   if (Status == CANDO_SUCCESS)
   {

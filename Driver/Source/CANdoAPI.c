@@ -394,6 +394,34 @@ int CANdoOpen(const CANdoUSBPointerType CANdoUSBPointer)
   return CANdoOpenDevice(CANdoUSBPointer, &CANdoDevice);
 }
 //--------------------------------------------------------------------------
+// CANdoFlushBuffersInner
+//
+// Flush the read/write buffers in the CP2102 & the local read buffer.
+//
+// Returns
+//    CANdo comms. status
+//--------------------------------------------------------------------------
+static int CANdoFlushBuffersInner(const CANdoUSBPointerType CANdoUSBPointer)
+{
+  int Status = CANDO_IO_FAILED;
+
+  // Flush CP2102 read/write buffers within device
+  // printf("CANdoFlushBuffersInner()\n");
+  if (CANdoUSBPointer->OpenFlag)
+  {
+    if (SI_FlushBuffers(CANdoUSBPointer->Handle, SI_FLUSH, SI_FLUSH) == SI_SUCCESS)
+      Status = CANDO_SUCCESS;
+  }
+  else
+    Status = CANDO_CONNECTION_CLOSED;
+
+  // Flush local read buffer
+  CANdoReadBuffer.WriteIndex = 0;
+  CANdoReadBuffer.ReadIndex = 0;
+
+  return Status;
+}
+//--------------------------------------------------------------------------
 // CANdoOpenDevice
 //
 // Open up a USB port to a specific CANdo device based on the H/W type + S/N
@@ -402,8 +430,7 @@ int CANdoOpen(const CANdoUSBPointerType CANdoUSBPointer)
 // Returns
 //    CANdo comms. status
 //--------------------------------------------------------------------------
-int CANdoOpenDevice(const CANdoUSBPointerType CANdoUSBPointer,
-  const CANdoDevicePointerType CANdoDevicePointer)
+int CANdoOpenDevice(const CANdoUSBPointerType CANdoUSBPointer, const CANdoDevicePointerType CANdoDevicePointer)
 {
   int Status = CANDO_CONNECTION_CLOSED, CANdoType;
 
@@ -462,11 +489,12 @@ int CANdoOpenDevice(const CANdoUSBPointerType CANdoUSBPointer,
         {
           // Set USB UART parameters
           if ((SI_SetLineControl(CANdoUSBPointer->Handle, SI_ONE_STOP | SI_NO_PARITY | SI_8_DATA_BITS) == SI_SUCCESS) &&
-            (SI_SetTimeouts(SI_TIMEOUT_100MS, SI_TIMEOUT_100MS) == SI_SUCCESS))
+            (SI_SetTimeouts(SI_TIMEOUT_100MS, SI_TIMEOUT_100MS) == SI_SUCCESS)) {
             // Synchronous, blocking read & write with timeouts set to 100ms
-            Status = CANdoFlushBuffers(CANdoUSBPointer);  // Flush CP2102 buffers & local read buffer
-          else
-            Status = CANDO_IO_FAILED;
+            Status = CANdoFlushBuffersInner(CANdoUSBPointer);  // Flush CP2102 buffers & local read buffer
+            } else {
+              Status = CANDO_IO_FAILED;
+            }
         }
         else
           Status = CANDO_IO_FAILED;
@@ -522,22 +550,8 @@ int CANdoClose(const CANdoUSBPointerType CANdoUSBPointer)
 //--------------------------------------------------------------------------
 int CANdoFlushBuffers(const CANdoUSBPointerType CANdoUSBPointer)
 {
-  int Status = CANDO_IO_FAILED;
-
-  // Flush CP2102 read/write buffers within device
-  if (CANdoUSBPointer->OpenFlag)
-  {
-    if (SI_FlushBuffers(CANdoUSBPointer->Handle, SI_FLUSH, SI_FLUSH) == SI_SUCCESS)
-      Status = CANDO_SUCCESS;
-  }
-  else
-    Status = CANDO_CONNECTION_CLOSED;
-
-  // Flush local read buffer
-  CANdoReadBuffer.WriteIndex = 0;
-  CANdoReadBuffer.ReadIndex = 0;
-
-  return Status;
+  // printf("CANdoFlushBuffers()\n");
+  return CANdoFlushBuffersInner(CANdoUSBPointer);
 }
 //--------------------------------------------------------------------------
 // CANdoTransmit
